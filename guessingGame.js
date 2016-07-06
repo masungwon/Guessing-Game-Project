@@ -18,13 +18,10 @@ function generateWinningNumber(){
 
 // Fetch the Players Guess
 function playersGuessSubmission(){
-//  $('#submit').on('click', function(){
-    playersGuess = parseInt($('#guess').val()); //TODO how do I read the input?!
-    console.log(playersGuess);
+    playersGuess = parseInt($('#guess').val());
     $('#guess').val('');
-    $('#hint').val(''); //TODO what is the difference between .text() and .val()?
+    $('#hint').val('');
     checkGuess();
-//  });
 }
 
 // Determine if the next guess should be a lower or higher number
@@ -60,28 +57,38 @@ function guessMessage() {
 // Check if the Player's Guess is the winning number
 function checkGuess(){
   if (winningNumber == playersGuess){
-    $('#message').text("You win!"); //TODO this line is not showing up?!
-    //TODO add more stuff here to congratulate the Player
+    $('#message').text("You win!");
+    //TODO add more stuff here to congratulate the Player?
   } else if (guessArr.indexOf(playersGuess) != -1){
-    $('#message').text("You submitted a duplicate number! Try again"); //TODO this line is not showing up?!
+    $('#message').text("You submitted a duplicate number! Try again");
   } else {
-    if (remainingGuess != 0) {
-      $('#message').text(guessMessage()); //TODO this line is not showing up?!
+    // if (remainingGuess != 0) {}
+    if (remainingGuess != 1) {
+      $('#message').text(guessMessage());
       remainingGuess-=1;
+      guessesRemaining();
       guessArr.push(playersGuess);
     } else {
       // remainingGuess == 0
-      // TODO the Player lost! They're a loser!!
+      $('#message').text("You lose! Try again!");
+      raminingGuess==0;
+      guessesRemaining();
     }
   }
 }
 
-//TODO what the heck is going on in this code?
+// Display number of guesses remaining
 function guessesRemaining() {
-    remainingGuess > 2 ? (remainingGuess -= 1,
-    document.getElementById("guess-count").innerHTML = remainingGuess + " Guesses Remaining") : 2 === playerGuessCount ? (playerGuessCount -= 1,
-    document.getElementById("guess-count").innerHTML = remainingGuess + " Guess Remaining") : document.getElementById("guess-count").innerHTML = "Sorry, play again!"
-};
+  if(remainingGuess == 2) {
+    $('#guess-count').text("2 Guesses Remaining");
+  }
+  if (remainingGuess == 1) {
+    $('#guess-count').text("1 Guess Remaining");
+  }
+  if (remainingGuess == 0) {
+    $('#guess-count').text("You used up all your guesses. You lose!"); //TODO 1 Guess Remaining is not updating to "You used up all your Guesses"
+  }
+}
 
 // Display the hint when the "hint" button is clicked
 function provideHint(){
@@ -89,7 +96,6 @@ function provideHint(){
   var dummyVal1 = Math.floor(100 * Math.random() + 1);
   var dummyVal2 = Math.floor(100 * Math.random() + 1);
   optionsArr.push(winningNumber, dummyVal1, dummyVal2);
-//  shuffle(optionsArr);
   optionsArr.join(', ');
   var hintMessage = "One of these values is the winning number: " + optionsArr + ". Submit a guess!";
   //TODO I might want to make sure that the Player can only click the hint button once
@@ -97,31 +103,16 @@ function provideHint(){
   $('#hint').text(hintMessage);
 }
 
-// Fisher-Yates Shuffle algorithm, found on StackOverflow
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
-
 // Allow the "Player" to Play Again
 function playAgain(){
   winningNumber = generateWinningNumber(),
   guessArr = [],
   remainingGuess = 5;
+  playersGuess = -1; //TODO how do I reset playersGuess?
   $('#guess').val('');
-  $('#message').val('');
+  $('#message').val('Your game has been restarted. Submit a new guess!');
   $('#hint').val('');
-  //TODO what do the following 3 lines do?
-  textStatus.innerHTML = "Your game has been restarted. Submit a new guess!",
-  document.getElementById("guess-count").innerHTML = "",
-  document.getElementById("playersGuess").value = ""
+  $("guess-count").val('');
 }
 
 
