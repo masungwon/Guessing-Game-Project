@@ -56,6 +56,7 @@ function checkGuess(){
     $('#message').text('');
     $('#guess-count').text("YOU WON!!!!! CONGRATULATIONS!!!");
     //TODO how might I add an image to the website? (https://i.ytimg.com/vi/lU3t91UUgF0/maxresdefault.jpg)
+    //changing visibility with jquery
     $('#hint').text('');
   } else if (guessArr.indexOf(playersGuess) != -1){
     $('#message').text("You submitted a duplicate number! Try again");
@@ -70,6 +71,7 @@ function checkGuess(){
       $('#message').text('');
       $('#hint').text('');
       //TODO how might I add an image to the website? (https://i.ytimg.com/vi/lU3t91UUgF0/maxresdefault.jpg)
+      //changing visibility with jquery
       guessesRemaining();
     }
   }
@@ -114,17 +116,27 @@ function playAgain(){
 
 
 /* **** Event Listeners/Handlers ****  */
-$(document).ready(function(){
+$(document).ready( function(){
   $('#submit').click( function(event){
-    event.preventDefault(); //prevents the page from reloading?
+    event.preventDefault();
     playersGuessSubmission();
   });
-//  $('#submit').('keypress', function(event) //TODO!!
+
+  $('#guessBox').keyup( function(event){
+    if (event.keyCode == 13 || event.which == 13){
+      debugger
+      console.log("Enter got pressed");
+      debugger
+      event.preventDefault();
+      playersGuessSubmission();
+    }
+  });
 
   $("#getHint").click( function(event){
     event.preventDefault();
     provideHint();
   });
+
   $('#again').click( function(event) {
     playAgain();
   })
