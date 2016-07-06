@@ -18,17 +18,19 @@ function generateWinningNumber(){
 
 // Fetch the Players Guess
 function playersGuessSubmission(){
-  $('#submit').on('click', function(){
-    playersGuess = parseInt($('#guess').val());
+//  $('#submit').on('click', function(){
+    playersGuess = parseInt($('#guess').val()); //TODO how do I read the input?!
+    console.log(playersGuess);
     $('#guess').val('');
-    $('#hint').text(''); //TODO what is the difference between .text() and .val()?
+    $('#hint').val(''); //TODO what is the difference between .text() and .val()?
     checkGuess();
-  });
+//  });
 }
 
 // Determine if the next guess should be a lower or higher number
 function lowerOrHigher(){
-	if(winningNumber > playersGuess) {
+  //enter this function only if winningNumber != playersGuess
+  if(winningNumber > playersGuess) {
     return "lower"; //"Your guess is lower"
   }
   if(winningNumber < playersGuess) {
@@ -79,7 +81,7 @@ function guessesRemaining() {
     remainingGuess > 2 ? (remainingGuess -= 1,
     document.getElementById("guess-count").innerHTML = remainingGuess + " Guesses Remaining") : 2 === playerGuessCount ? (playerGuessCount -= 1,
     document.getElementById("guess-count").innerHTML = remainingGuess + " Guess Remaining") : document.getElementById("guess-count").innerHTML = "Sorry, play again!"
-}
+};
 
 // Display the hint when the "hint" button is clicked
 function provideHint(){
