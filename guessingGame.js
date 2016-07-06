@@ -6,9 +6,6 @@ var playersGuess,
     guessArr = [],
     remainingGuess = 3;
 
-//TODO also I might want to make sure that the Player is not entering anything that's not a number
-//Need to display the remainingGuess count
-
 /* **** Guessing Game Functions **** */
 
 // Generate the Winning Number
@@ -26,12 +23,11 @@ function playersGuessSubmission(){
 
 // Determine if the next guess should be a lower or higher number
 function lowerOrHigher(){
-  //enter this function only if winningNumber != playersGuess
   if(winningNumber > playersGuess) {
-    return "lower"; //"Your guess is lower"
+    return "lower";
   }
   if(winningNumber < playersGuess) {
-    return "higher"; //"Your guess is higher"
+    return "higher";
   }
 };
 
@@ -57,21 +53,23 @@ function guessMessage() {
 // Check if the Player's Guess is the winning number
 function checkGuess(){
   if (winningNumber == playersGuess){
-    $('#message').text("You win!");
-    //TODO add more stuff here to congratulate the Player?
+    $('#message').text('');
+    $('#guess-count').text("YOU WON!!!!! CONGRATULATIONS!!!");
+    //TODO how might I add an image to the website? (https://i.ytimg.com/vi/lU3t91UUgF0/maxresdefault.jpg)
+    $('#hint').text('');
   } else if (guessArr.indexOf(playersGuess) != -1){
     $('#message').text("You submitted a duplicate number! Try again");
   } else {
-    // if (remainingGuess != 0) {}
     if (remainingGuess != 1) {
       $('#message').text(guessMessage());
       remainingGuess-=1;
       guessesRemaining();
       guessArr.push(playersGuess);
     } else {
-      // remainingGuess == 0
-      $('#message').text("You lose! Try again!");
-      raminingGuess==0;
+      remainingGuess = 0;
+      $('#message').text('');
+      $('#hint').text('');
+      //TODO how might I add an image to the website? (https://i.ytimg.com/vi/lU3t91UUgF0/maxresdefault.jpg)
       guessesRemaining();
     }
   }
@@ -86,7 +84,8 @@ function guessesRemaining() {
     $('#guess-count').text("1 Guess Remaining");
   }
   if (remainingGuess == 0) {
-    $('#guess-count').text("You used up all your guesses. You lose!"); //TODO 1 Guess Remaining is not updating to "You used up all your Guesses"
+    //TOOD we never get here
+    $('#guess-count').text("You used up all your guesses. You lose!");
   }
 }
 
@@ -98,8 +97,6 @@ function provideHint(){
   optionsArr.push(winningNumber, dummyVal1, dummyVal2);
   optionsArr.join(', ');
   var hintMessage = "One of these values is the winning number: " + optionsArr + ". Submit a guess!";
-  //TODO I might want to make sure that the Player can only click the hint button once
-  //TODO how might I add an image to the website? (https://i.ytimg.com/vi/lU3t91UUgF0/maxresdefault.jpg)
   $('#hint').text(hintMessage);
 }
 
@@ -107,12 +104,12 @@ function provideHint(){
 function playAgain(){
   winningNumber = generateWinningNumber(),
   guessArr = [],
-  remainingGuess = 5;
-  playersGuess = -1; //TODO how do I reset playersGuess?
+  remainingGuess = 3;
+  playersGuess = -1;
+  $('#guess-count').text("3 Guesses Remaining");
   $('#guess').val('');
-  $('#message').val('Your game has been restarted. Submit a new guess!');
+  $('#message').text('Your game has been restarted. Submit a new guess!');
   $('#hint').val('');
-  $("guess-count").val('');
 }
 
 
@@ -121,9 +118,14 @@ $(document).ready(function(){
   $('#submit').click( function(event){
     event.preventDefault(); //prevents the page from reloading?
     playersGuessSubmission();
-  })
+  });
+//  $('#submit').('keypress', function(event) //TODO!!
+
   $("#getHint").click( function(event){
     event.preventDefault();
     provideHint();
   });
+  $('#again').click( function(event) {
+    playAgain();
+  })
 });
