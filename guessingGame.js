@@ -1,6 +1,4 @@
 /* **** Global Variables **** */
-// try to elminate these global variables in your project, these are here just to start.
-
 var playersGuess,
     winningNumber = generateWinningNumber(),
     guessArr = [],
@@ -55,7 +53,7 @@ function checkGuess(){
   if (winningNumber == playersGuess){
     $('#message').text('');
     $('#guess-count').text("YOU WON!!!!! CONGRATULATIONS!!!");
-    //TODO how might I add an image to the website? (https://i.ytimg.com/vi/lU3t91UUgF0/maxresdefault.jpg)
+    //TODO how might I add an image to the website?
     //changing visibility with jquery
     $('#hint').text('');
   } else if (guessArr.indexOf(playersGuess) != -1){
@@ -70,7 +68,7 @@ function checkGuess(){
       remainingGuess = 0;
       $('#message').text('');
       $('#hint').text('');
-      //TODO how might I add an image to the website? (https://i.ytimg.com/vi/lU3t91UUgF0/maxresdefault.jpg)
+      //TODO how might I add an image to the website?
       //changing visibility with jquery
       guessesRemaining();
     }
@@ -86,7 +84,6 @@ function guessesRemaining() {
     $('#guess-count').text("1 Guess Remaining");
   }
   if (remainingGuess == 0) {
-    //TOOD we never get here
     $('#guess-count').text("You used up all your guesses. You lose!");
   }
 }
@@ -124,9 +121,6 @@ $(document).ready( function(){
 
   $('#guessBox').keyup( function(event){
     if (event.keyCode == 13 || event.which == 13){
-      debugger
-      console.log("Enter got pressed");
-      debugger
       event.preventDefault();
       playersGuessSubmission();
     }
